@@ -73,6 +73,76 @@
   #info-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%;
     background:rgba(4,10,20,0.97); z-index:200; overflow-y:auto; padding:20px 24px; }
 
+  /* ── REQUIREMENTS HTML PANEL ── */
+  #req-panel { display:none; position:absolute; top:0; left:0; right:0; bottom:0;
+    background:#02080e; flex-direction:column; z-index:5; font-family:'Arial',sans-serif; }
+  #req-panel.visible { display:flex; }
+  #req-tab-nav { display:flex; background:#030b08; border-bottom:1px solid #0d2218;
+    padding:0 20px; gap:2px; flex-shrink:0; }
+  .rtab { padding:12px 20px; border:none; border-bottom:3px solid transparent;
+    background:transparent; color:#446; font-size:10px; font-weight:700;
+    letter-spacing:1.5px; cursor:pointer; text-transform:uppercase; transition:all 0.15s; }
+  .rtab.active { color:#39ff14; border-bottom-color:#39ff14; }
+  .rtab:hover:not(.active) { color:#aaa; }
+  .req-scroll { flex:1; overflow-y:auto; padding:28px 36px; }
+  .req-section { display:none; }
+  .req-section.active { display:block; }
+  .req-page-title { font-size:22px; font-weight:900; color:#39ff14; letter-spacing:3px;
+    margin-bottom:4px; text-transform:uppercase; }
+  .req-page-sub { font-size:11px; color:#446; letter-spacing:2px; margin-bottom:28px;
+    font-weight:700; text-transform:uppercase; }
+  .req-grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px; }
+  .req-grid-2 { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:20px; }
+  .req-grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px; }
+  .req-card { background:#06101a; border:1px solid #1a2e42; border-radius:6px; padding:18px 20px; }
+  .req-card-lbl { font-size:9px; letter-spacing:2px; color:#446; text-transform:uppercase;
+    margin-bottom:8px; font-weight:700; }
+  .req-card-val { font-size:26px; font-weight:900; letter-spacing:1px; line-height:1.1; margin-bottom:6px; }
+  .req-card-sub { font-size:11px; color:#778; line-height:1.6; }
+  .req-card.green  { border-color:#39ff1466; } .req-card.green  .req-card-val { color:#39ff14; }
+  .req-card.cyan   { border-color:#00d4ff66; } .req-card.cyan   .req-card-val { color:#00d4ff; }
+  .req-card.amber  { border-color:#ff8c0066; } .req-card.amber  .req-card-val { color:#ff8c00; }
+  .req-card.teal   { border-color:#00ffcc66; } .req-card.teal   .req-card-val { color:#00ffcc; }
+  .req-card.purple { border-color:#cc88ff66; } .req-card.purple .req-card-val { color:#cc88ff; }
+  .req-card.red    { border-color:#ff334466; } .req-card.red    .req-card-val { color:#ff3344; }
+  .req-h2 { font-size:10px; font-weight:700; color:#00d4ff; letter-spacing:2px; text-transform:uppercase;
+    margin:28px 0 14px; padding-bottom:8px; border-bottom:1px solid #0d2233; }
+  .req-table { width:100%; border-collapse:collapse; font-size:13px; margin-bottom:20px; }
+  .req-table th { text-align:left; padding:10px 14px; font-size:9px; letter-spacing:2px;
+    color:#446; text-transform:uppercase; background:#050e16; border-bottom:1px solid #0d2030; }
+  .req-table td { padding:10px 14px; border-bottom:1px solid #0a1822; color:#aaa; line-height:1.4; }
+  .req-table td.val { text-align:right; color:#fff; font-weight:700; font-variant-numeric:tabular-nums; }
+  .req-table td.hi  { color:#39ff14; font-weight:700; }
+  .req-table td.ok  { color:#00d4ff; font-weight:700; }
+  .req-table td.warn { color:#ff8c00; font-weight:700; }
+  .req-table td.bad  { color:#ff3344; font-weight:700; }
+  .req-table tr:hover td { background:#050e16; }
+  .req-box { border-radius:5px; padding:14px 20px; font-size:13px; line-height:1.8;
+    margin-bottom:18px; }
+  .req-box.red   { background:#0a0406; border:1px solid #ff334444; color:#ee9999; }
+  .req-box.red   strong { color:#ff4455; }
+  .req-box.green { background:#040c06; border:1px solid #39ff1444; color:#99cc88; }
+  .req-box.green strong { color:#39ff14; }
+  .req-box.blue  { background:#04080f; border:1px solid #00d4ff44; color:#88bbdd; }
+  .req-box.blue  strong { color:#00d4ff; }
+  .req-box.amber { background:#0a0700; border:1px solid #ff8c0044; color:#ddaa66; }
+  .req-box.amber strong { color:#ff8c00; }
+  .req-tl { display:grid; gap:8px; margin-bottom:20px; }
+  .req-tl-row { display:grid; grid-template-columns:64px 1fr 1fr; gap:16px;
+    align-items:start; padding:12px 16px; background:#06101a; border-radius:4px;
+    border-left:3px solid #1a3050; font-size:13px; }
+  .req-tl-row.phy-done { border-left-color:#ff8c00; }
+  .req-tl-row.both-done { border-left-color:#39ff14; }
+  .req-tl-day { font-size:11px; font-weight:700; color:#446; letter-spacing:1px; }
+  .req-tl-phy  { color:#ff8c00; }
+  .req-tl-log  { color:#00d4ff; }
+  .req-bar-row { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+  .req-bar-lbl { width:120px; font-size:11px; color:#778; text-align:right; flex-shrink:0; }
+  .req-bar-wrap { flex:1; background:#0a1420; border-radius:3px; height:22px; position:relative; overflow:hidden; }
+  .req-bar-fill { height:100%; border-radius:3px; transition:width 0.3s; }
+  .req-bar-val  { position:absolute; right:10px; top:3px; font-size:11px; font-weight:700; color:#fff; }
+  .req-bar-note { width:200px; font-size:10px; color:#556; flex-shrink:0; }
+
   /* ── SPLASH SCREEN ── */
   #splash {
     position:fixed; top:0; left:0; width:100%; height:100%;
@@ -462,6 +532,233 @@
 
   <div id="canvas-wrap">
     <canvas id="c"></canvas>
+
+    <!-- ══════════════════════ REQUIREMENTS HTML PANEL ══════════════════════ -->
+    <div id="req-panel">
+      <div id="req-tab-nav">
+        <button class="rtab active" onclick="showReqTab('overview')"  id="rtab-overview" >⊕ OVERVIEW</button>
+        <button class="rtab"        onclick="showReqTab('schedule')"  id="rtab-schedule" >📅 SCHEDULE</button>
+        <button class="rtab"        onclick="showReqTab('space')"     id="rtab-space"    >📐 SPACE &amp; RACKS</button>
+        <button class="rtab"        onclick="showReqTab('crew')"      id="rtab-crew"     >👷 CREW &amp; STAFF</button>
+      </div>
+      <div class="req-scroll">
+
+        <!-- ── OVERVIEW ── -->
+        <div id="rts-overview" class="req-section active">
+          <div class="req-page-title">Absolute Deployment Requirements</div>
+          <div class="req-page-sub">8 Pods &nbsp;·&nbsp; 480 Racks &nbsp;·&nbsp; 7 Days &nbsp;·&nbsp; 2 Active Data Halls</div>
+          <div class="req-grid-3">
+            <div class="req-card green">
+              <div class="req-card-lbl">Total racks</div>
+              <div class="req-card-val">480</div>
+              <div class="req-card-sub">8 pods × 60 racks<br>24 rows per DH · 10 racks per row</div>
+            </div>
+            <div class="req-card cyan">
+              <div class="req-card-lbl">Deployment window</div>
+              <div class="req-card-val">7 days</div>
+              <div class="req-card-sub">120 racks/day physical (Days 1–4)<br>Logical turn-up runs Days 2–7</div>
+            </div>
+            <div class="req-card amber">
+              <div class="req-card-lbl">Peak physical crew</div>
+              <div class="req-card-val">44 / shift</div>
+              <div class="req-card-sub">Space ceiling — not headcount<br>16 dock · 8 tugger · 16 placer · 4 super</div>
+            </div>
+            <div class="req-card teal">
+              <div class="req-card-lbl">Rack spec (TPU v8)</div>
+              <div class="req-card-val">28″ × 48″</div>
+              <div class="req-card-sub">Row = 25 ft (9 TPU + 1 EOR @ 48″)<br>↓ 19.5 ft shorter than TPU v7</div>
+            </div>
+            <div class="req-card purple">
+              <div class="req-card-lbl">Recommended dock</div>
+              <div class="req-card-val">8–12 doors</div>
+              <div class="req-card-sub">Each: 9 ft W × 10 ft H<br>Staging hall: 80 × 180 ft (14,440 sf)</div>
+            </div>
+            <div class="req-card red">
+              <div class="req-card-lbl">Hard bottleneck</div>
+              <div class="req-card-val">12-ft corridor</div>
+              <div class="req-card-sub">2 simultaneous carts max per DH<br>More staff won't change this</div>
+            </div>
+          </div>
+          <div class="req-box red">
+            <strong>⚠ KEY CONSTRAINT:</strong> The 12-ft center corridor physically limits simultaneous inbound carts to <strong>2 per data hall</strong>. More workers, more doors, more trucks — none bypass this ceiling. The ant colony model works around it via one-way lanes: inbound through the center corridor, return via the 8-ft outer walkway.
+          </div>
+          <div class="req-box blue">
+            <strong>DELIVERY MATH:</strong> 341 TL total ÷ 96 working hours (4 days × 24 hrs dual-shift) = <strong>3.55 TL/hr required</strong>. At 1.2 TL/hr per dock bay, you need a minimum of 3 bays — 8 bays recommended for scheduling buffer and surge absorption.
+          </div>
+        </div>
+
+        <!-- ── SCHEDULE ── -->
+        <div id="rts-schedule" class="req-section">
+          <div class="req-page-title">7-Day Critical Path</div>
+          <div class="req-page-sub">Physical delivery overlaps with logical turn-up from Day 2 onward</div>
+
+          <div class="req-h2">Day-by-Day Timeline</div>
+          <div class="req-tl">
+            <div style="display:grid;grid-template-columns:64px 1fr 1fr;gap:16px;padding:8px 16px;font-size:9px;letter-spacing:2px;color:#446;text-transform:uppercase;">
+              <div></div><div>Physical Delivery</div><div>Logical Turn-up</div>
+            </div>
+            <div class="req-tl-row phy-done">
+              <div class="req-tl-day">DAY 1</div>
+              <div class="req-tl-phy">Pods 1–2 · 120 racks</div>
+              <div style="color:#446">—</div>
+            </div>
+            <div class="req-tl-row phy-done">
+              <div class="req-tl-day">DAY 2</div>
+              <div class="req-tl-phy">Pods 3–4 · 120 racks</div>
+              <div class="req-tl-log">Pod 1 begins power + fiber</div>
+            </div>
+            <div class="req-tl-row phy-done">
+              <div class="req-tl-day">DAY 3</div>
+              <div class="req-tl-phy">Pods 5–6 · 120 racks</div>
+              <div class="req-tl-log">Pods 1–2 logical complete</div>
+            </div>
+            <div class="req-tl-row phy-done">
+              <div class="req-tl-day">DAY 4</div>
+              <div class="req-tl-phy">Pods 7–8 · 120 racks</div>
+              <div class="req-tl-log">Pods 3–5 in progress</div>
+            </div>
+            <div class="req-tl-row both-done">
+              <div class="req-tl-day">DAY 5</div>
+              <div class="req-tl-phy" style="color:#39ff14">Physical complete ✓</div>
+              <div class="req-tl-log">Pods 4–6 complete</div>
+            </div>
+            <div class="req-tl-row both-done">
+              <div class="req-tl-day">DAY 6</div>
+              <div style="color:#446">Punch list / buffer</div>
+              <div class="req-tl-log">Pods 6–7 complete</div>
+            </div>
+            <div class="req-tl-row both-done">
+              <div class="req-tl-day">DAY 7</div>
+              <div style="color:#446">Full system verify</div>
+              <div class="req-tl-log" style="color:#39ff14">Pod 8 + sign-off ✓</div>
+            </div>
+          </div>
+
+          <div class="req-h2">Door Count vs Delivery Rate</div>
+          <table class="req-table">
+            <thead>
+              <tr><th>Doors</th><th>Capacity</th><th>Required</th><th>Utilization</th><th>Assessment</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>3 doors</td><td class="val">3.6 TL/hr</td><td class="val">3.55 TL/hr</td><td class="bad">99% util</td><td class="bad">CRITICAL — zero margin</td></tr>
+              <tr><td>6 doors</td><td class="val">7.2 TL/hr</td><td class="val">3.55 TL/hr</td><td class="ok">49% util</td><td class="ok">VIABLE — adequate for 7-day pace</td></tr>
+              <tr><td>8 doors</td><td class="val">9.6 TL/hr</td><td class="val">3.55 TL/hr</td><td class="hi">37% util</td><td class="hi">RECOMMENDED ✓</td></tr>
+              <tr><td>12 doors</td><td class="val">14.4 TL/hr</td><td class="val">3.55 TL/hr</td><td class="hi">25% util</td><td class="hi">OPTIMAL — dock not the bottleneck</td></tr>
+              <tr><td>16 doors</td><td class="val">19.2 TL/hr</td><td class="val">3.55 TL/hr</td><td style="color:#556">18% util</td><td style="color:#556">Diminishing returns</td></tr>
+            </tbody>
+          </table>
+          <div class="req-box amber">
+            <strong>REQUIRED RATE:</strong> 341 TL ÷ 96 working hours = <strong>3.55 TL/hr</strong>. Each bay delivers 1.2 TL/hr on a 50-min cycle. Beyond 12 doors the bottleneck shifts entirely to the row install rate and corridor capacity.
+          </div>
+        </div>
+
+        <!-- ── SPACE & RACKS ── -->
+        <div id="rts-space" class="req-section">
+          <div class="req-page-title">Space &amp; Rack Specifications</div>
+          <div class="req-page-sub">Building geometry · Rack dimensions · Traffic lane widths</div>
+
+          <div class="req-h2">Building Dimensions</div>
+          <table class="req-table">
+            <thead><tr><th>Zone</th><th>Dimensions</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td>Active data hall (each)</td><td class="val">285 × 170 ft</td><td>~48,450 sf · DH-W and DH-E</td></tr>
+              <tr><td>Transport Hall (dock)</td><td class="val">80 × 180 ft</td><td>14,440 sf staging area</td></tr>
+              <tr><td>Under-construction DHs</td><td class="val">285 × 170 ft</td><td>DH-W2 and DH-E2 (not simulated)</td></tr>
+              <tr><td>Center corridor (per DH)</td><td class="val">12 ft wide</td><td>285 ft long · 2 inbound cart lanes</td></tr>
+              <tr><td>Outer walkway (each side)</td><td class="val">8 ft wide</td><td>1 return lane · one-way outbound</td></tr>
+              <tr><td>MDB gallery (each end)</td><td class="val">14 ft</td><td>Power distribution access</td></tr>
+              <tr><td>Row zone (each half)</td><td class="val">65 ft deep</td><td>12 rows per side · 10 racks per row</td></tr>
+            </tbody>
+          </table>
+
+          <div class="req-h2">Rack Specification — TPU v8</div>
+          <div class="req-grid-2">
+            <table class="req-table">
+              <thead><tr><th>Dimension</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td>Rack width (TPU v8)</td><td class="val hi">28″ (2.33 ft)</td></tr>
+                <tr><td>Rack depth (TPU v8)</td><td class="val">48″ (4 ft)</td></tr>
+                <tr><td>EOR unit width</td><td class="val">48″ (4 ft)</td></tr>
+                <tr><td>Row composition</td><td class="val">1 EOR + 9 TPU</td></tr>
+                <tr><td>Row total length</td><td class="val hi">300″ = 25 ft</td></tr>
+                <tr><td>vs TPU v7 (54″ wide)</td><td class="val" style="color:#ff6b35">↓ 19.5 ft shorter</td></tr>
+              </tbody>
+            </table>
+            <table class="req-table">
+              <thead><tr><th>Aisle / Clearance</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td>Cold aisle width</td><td class="val">4 ft</td></tr>
+                <tr><td>Hot aisle width</td><td class="val">4 ft</td></tr>
+                <tr><td>Row pitch (along corridor)</td><td class="val">4.5 ft</td></tr>
+                <tr><td>Rack height</td><td class="val">7 ft</td></tr>
+                <tr><td>Ceiling height</td><td class="val">13 ft</td></tr>
+                <tr><td>Cart width (loaded)</td><td class="val">~3.5 ft</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="req-h2">Traffic Lane Layout (per DH)</div>
+          <div class="req-box blue">
+            <strong>ONE-WAY SYSTEM:</strong> Inbound carts travel the center corridor (green lane). Empty carts return via the outer walkway (orange lane). Zero bidirectional conflict. The 12-ft corridor supports exactly <strong>2 simultaneous inbound carts</strong> — this is the physical throughput ceiling regardless of door count or staffing.
+          </div>
+          <table class="req-table">
+            <thead><tr><th>Lane</th><th>Width</th><th>Direction</th><th>Capacity</th></tr></thead>
+            <tbody>
+              <tr><td>Center corridor</td><td class="val">12 ft</td><td>Inbound only</td><td class="val">2 carts simultaneously</td></tr>
+              <tr><td>Outer walkway</td><td class="val">8 ft</td><td>Return only</td><td class="val">No hard limit</td></tr>
+              <tr><td>Transport Hall</td><td class="val">24 ft</td><td>Both directions</td><td class="val">4 cart lanes</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ── CREW & STAFF ── -->
+        <div id="rts-crew" class="req-section">
+          <div class="req-page-title">Crew &amp; Staff Analysis</div>
+          <div class="req-page-sub">Physical delivery · Logical turn-up · Staff sensitivity</div>
+
+          <div class="req-h2">Physical Delivery Crew (Per Shift)</div>
+          <table class="req-table">
+            <thead><tr><th>Role</th><th>Count</th><th>Location</th><th>Function</th></tr></thead>
+            <tbody>
+              <tr><td>Dock receivers</td><td class="val">16</td><td>Transport Hall</td><td>Unload trucks, scan, stage carts</td></tr>
+              <tr><td>Tugger / cart operators</td><td class="val">8</td><td>Corridor</td><td>Drive carts from dock to row entry</td></tr>
+              <tr><td>Placers</td><td class="val">16</td><td>Rows</td><td>Receive cart, bolt rack, return cart</td></tr>
+              <tr><td>Supervisors</td><td class="val">4</td><td>Floor</td><td>Row sequencing, go/no-go, safety</td></tr>
+              <tr><td style="font-weight:700;color:#fff" colspan="1">TOTAL PHYSICAL</td><td class="val hi">44</td><td colspan="2" style="color:#39ff14;font-weight:700">SPACE CEILING — corridor limits further gain</td></tr>
+            </tbody>
+          </table>
+
+          <div class="req-h2">Logical Turn-up Crew (Overlapping, Days 2–7)</div>
+          <table class="req-table">
+            <thead><tr><th>Role</th><th>Count</th><th>Phase</th><th>Duration / Row</th></tr></thead>
+            <tbody>
+              <tr><td>Power technicians</td><td class="val">12</td><td>Power whips</td><td>6 hrs · 8-person team</td></tr>
+              <tr><td>Network technicians</td><td class="val">8</td><td>Fiber / cabling</td><td>4 hrs · 6-person team</td></tr>
+              <tr><td>Systems engineers</td><td class="val">8</td><td>Burn-in / sign-off</td><td>10 hrs · 4-person team</td></tr>
+              <tr><td style="font-weight:700;color:#fff">TURN-UP TOTAL</td><td class="val ok">28</td><td colspan="2">72 peak simultaneous (physical + logical)</td></tr>
+            </tbody>
+          </table>
+
+          <div class="req-h2">Does Adding Staff Expedite Physical Delivery?</div>
+          <div id="req-staff-chart" style="margin-bottom:20px;">
+            <!-- bars generated by JS on tab show -->
+          </div>
+          <div class="req-box red">
+            <strong>KEY FINDING:</strong> 44 workers/shift hits the <strong>space ceiling</strong>. The 12-ft corridor allows at most 2 simultaneous inbound carts per DH. Adding staff beyond 44 yields &lt;10% throughput gain. To unlock more parallelism you need: <strong>(a)</strong> widen the corridor to 18 ft (3 lanes), or <strong>(b)</strong> add DH wall doors for direct outer-row access.
+          </div>
+          <div class="req-box green">
+            <strong>FIRE CODE OCCUPANCY (IBC / NFPA 101):</strong><br>
+            Transport Hall: 14,440 sf ÷ 300 sf/pp = <strong>48 max simultaneous</strong><br>
+            Active DH (delivery): 48,450 sf ÷ 300 sf/pp = <strong>161 max simultaneous</strong><br>
+            Active DH (cabling): 48,450 sf ÷ 150 sf/pp = <strong>323 max simultaneous</strong><br>
+            At 44 workers cycling (43% dock / 57% DH): ~19 in dock, ~25 in DH — well within limits.
+          </div>
+        </div>
+
+      </div><!-- .req-scroll -->
+    </div><!-- #req-panel -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+
     <div id="road-alert">⚠ ROAD BLOCKAGE — Construction Traffic</div>
     <div id="phase-banner"></div>
 
@@ -1681,7 +1978,10 @@ function drawTrafficSim(L) {
 // REQUIREMENTS VIEW — 8 pods / 7 days spec panel
 // ══════════════════════════════════════════════════════
 function drawRequirementsView(W, H) {
-  ctx.fillStyle='#020904'; ctx.fillRect(0,0,W,H);
+  // Requirements are now rendered as HTML in #req-panel — nothing to draw on canvas
+  ctx.fillStyle='#02080e'; ctx.fillRect(0,0,W,H);
+}
+function _drawRequirementsView_legacy(W, H) {
   const P=14;
 
   // ── Title ─────────────────────────────────────────
@@ -1963,7 +2263,7 @@ function drawRequirementsView(W, H) {
   ctx.fillStyle='rgba(8,14,10,0.9)'; ctx.fillRect(P,findY-12,W-P*2,14);
   ctx.fillStyle='#39ff14'; ctx.font='bold 8px monospace'; ctx.textAlign='center';
   ctx.fillText('KEY FINDING: 44 workers/shift hits the SPACE CEILING. More staff adds <10% gain. Fix: 12-ft corridor → 18-ft (3 lanes) or DH wall doors — these unlock throughput that headcount cannot.',W/2,findY);
-}
+} // end _drawRequirementsView_legacy
 
 // Scene geometry constants (feet)
 const GEO = {
@@ -3005,6 +3305,45 @@ function dismissSplash() {
   if (el) el.classList.add('hidden');
 }
 
+function showReqTab(tab) {
+  document.querySelectorAll('.req-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.rtab').forEach(b => b.classList.remove('active'));
+  const s = document.getElementById('rts-' + tab);
+  const b = document.getElementById('rtab-' + tab);
+  if (s) s.classList.add('active');
+  if (b) b.classList.add('active');
+  if (tab === 'crew') buildStaffChart();
+}
+
+function buildStaffChart() {
+  const el = document.getElementById('req-staff-chart');
+  if (!el || el.dataset.built) return;
+  el.dataset.built = '1';
+  const data = [
+    [20,  2.1, '#ff6b35', 'Understaffed — dock gaps, rows waiting'],
+    [30,  3.4, '#ffdd00', 'Approaching coverage — some idle rows'],
+    [44,  5.0, '#39ff14', 'OPTIMAL — corridor becomes the hard limit'],
+    [60,  5.3, '#00d4ff', 'Marginal (+6%) — faster per-rack ops only'],
+    [80,  5.4, '#00d4ff', 'Space ceiling — corridor saturated'],
+    [100, 5.4, '#556',    'No improvement — 2-cart limit holds'],
+    [120, 5.1, '#ff6b35', 'CONGESTION begins — workers blocking'],
+    [150, 4.5, '#ff3344', 'SEVERE CONGESTION — throughput declines'],
+  ];
+  const maxVal = 5.4;
+  el.innerHTML = data.map(([w, r, col, note]) => {
+    const pct = Math.round(r / maxVal * 100);
+    const isOpt = w === 44;
+    return `<div class="req-bar-row" style="${isOpt ? 'background:#040f06;border-radius:4px;padding:4px 0;' : ''}">
+      <div class="req-bar-lbl" style="color:${isOpt ? '#39ff14' : '#778'};font-weight:${isOpt ? '700' : '400'}">${w} workers</div>
+      <div class="req-bar-wrap">
+        <div class="req-bar-fill" style="width:${pct}%;background:${col}44;border-right:2px solid ${col}"></div>
+        <span class="req-bar-val" style="color:${col}">${r} racks/hr</span>
+      </div>
+      <div class="req-bar-note" style="color:${isOpt ? '#39ff14' : '#556'};font-weight:${isOpt ? '700' : '400'}">${note}</div>
+    </div>`;
+  }).join('');
+}
+
 function setView(mode) {
   viewMode = mode;
   const styles = {
@@ -3030,7 +3369,9 @@ function setView(mode) {
     if (!tInitDone) initTrafficAgents();
     startTrafficLoop();
   }
-  if (mode !== 'ground') draw();
+  const rp = document.getElementById('req-panel');
+  if (rp) rp.classList.toggle('visible', mode === 'requirements');
+  if (mode !== 'ground' && mode !== 'requirements') draw();
 }
 
 function startGroundLoop() {
