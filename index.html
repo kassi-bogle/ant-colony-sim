@@ -3,160 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>6MDC Dock Door Recommendation</title>
+<title>6MDC Dock Door Recommendation — TPU v8</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:#0d1117; color:#c9d1d9; font-family:'Segoe UI',system-ui,sans-serif; line-height:1.6; padding:24px; max-width:1200px; margin:0 auto; }
-  h1 { font-size:1.6rem; color:#58a6ff; margin-bottom:4px; }
-  h2 { font-size:1.2rem; color:#8b949e; margin:32px 0 12px; border-bottom:1px solid #21262d; padding-bottom:6px; }
-  h3 { font-size:1rem; color:#c9d1d9; margin:20px 0 8px; }
-  .subtitle { color:#8b949e; font-size:0.85rem; margin-bottom:20px; }
-  .banner { background:#1a7f37; border-radius:8px; padding:16px 24px; margin:20px 0; text-align:center; }
-  .banner h2 { color:#fff; border:none; margin:0; font-size:1.5rem; }
-  .banner p { color:#aff5b4; margin:4px 0 0; font-size:0.9rem; }
-  .cards { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin:20px 0; }
-  .card { background:#161b22; border:2px solid #30363d; border-radius:8px; padding:20px; }
-  .card.rec { border-color:#1a7f37; background:#0d1117; }
-  .card .count { font-size:2.4rem; font-weight:700; color:#58a6ff; }
-  .card.rec .count { color:#3fb950; }
-  .card .label { font-size:0.8rem; color:#8b949e; text-transform:uppercase; letter-spacing:1px; }
-  .card .detail { margin-top:12px; font-size:0.85rem; }
-  .card .detail div { margin:4px 0; }
-  .card .tag { display:inline-block; font-size:0.7rem; padding:2px 8px; border-radius:10px; margin-top:8px; }
-  .tag.green { background:#1a7f37; color:#aff5b4; }
-  .tag.yellow { background:#9e6a03; color:#f0d36e; }
-  .tag.gray { background:#30363d; color:#8b949e; }
-  table { width:100%; border-collapse:collapse; margin:12px 0; font-size:0.85rem; }
-  th { text-align:left; padding:8px 12px; background:#161b22; color:#8b949e; font-weight:600; border-bottom:2px solid #30363d; }
-  td { padding:8px 12px; border-bottom:1px solid #21262d; }
-  tr.highlight td { background:#0d2818; color:#3fb950; font-weight:600; }
-  .formula { background:#161b22; border-radius:6px; padding:12px 16px; font-family:'Cascadia Code',monospace; font-size:0.8rem; margin:8px 0; color:#79c0ff; overflow-x:auto; }
-  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
-  .floorplan { background:#161b22; border-radius:8px; padding:16px; margin:16px 0; }
-  .floorplan svg { width:100%; height:auto; }
-  .assumptions li { margin:4px 0; font-size:0.85rem; color:#8b949e; }
+  body { background:#0d1117; color:#c9d1d9; font-family:'Segoe UI',system-ui,sans-serif; line-height:1.6; padding:24px; max-width:1000px; margin:0 auto; }
+  h1 { font-size:1.5rem; color:#58a6ff; margin-bottom:4px; }
+  h2 { font-size:1.1rem; color:#8b949e; margin:28px 0 10px; border-bottom:1px solid #21262d; padding-bottom:6px; }
+  .sub { color:#8b949e; font-size:0.82rem; margin-bottom:20px; }
+  .rec { background:#1a7f37; border-radius:8px; padding:16px 24px; margin:20px 0; text-align:center; }
+  .rec h2 { color:#fff; border:none; margin:0; font-size:1.4rem; }
+  .rec p { color:#aff5b4; margin:4px 0 0; font-size:0.88rem; }
+  table { width:100%; border-collapse:collapse; margin:10px 0; font-size:0.84rem; }
+  th { text-align:left; padding:7px 10px; background:#161b22; color:#8b949e; font-weight:600; border-bottom:2px solid #30363d; }
+  td { padding:7px 10px; border-bottom:1px solid #21262d; }
+  tr.hl td { background:#0d2818; color:#3fb950; font-weight:600; }
+  .math { background:#161b22; border-radius:6px; padding:12px 16px; font-family:'Cascadia Code',monospace; font-size:0.8rem; margin:8px 0; color:#79c0ff; }
+  .note { background:#1c1e23; border-left:3px solid #58a6ff; padding:8px 12px; margin:10px 0; font-size:0.84rem; }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .section { margin-bottom:28px; }
+  .fp { background:#161b22; border-radius:8px; padding:16px; margin:12px 0; }
+  .fp svg { width:100%; height:auto; }
+  .opts { background:#161b22; border-radius:6px; padding:10px 14px; margin:6px 0; font-size:0.84rem; }
+  .opts strong { color:#d2a8ff; }
+  .assumptions li { margin:3px 0; font-size:0.82rem; color:#8b949e; }
   .assumptions li strong { color:#c9d1d9; }
-  .accel { background:#161b22; border-radius:6px; padding:12px 16px; margin:8px 0; }
-  .accel strong { color:#d2a8ff; }
-  .note { background:#1c1e23; border-left:3px solid #58a6ff; padding:8px 12px; margin:12px 0; font-size:0.85rem; }
-  .section { margin-bottom:32px; }
-  @media(max-width:800px){ .cards,.two-col { grid-template-columns:1fr; } }
+  @media(max-width:700px){ .two { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
 
 <h1>6MDC Dock Door Recommendation</h1>
-<p class="subtitle">Building: 6MDC — 1870'-0" × Row A–D &nbsp;|&nbsp; Source: 6MDC Plans R2 + CB3 Throughput Model &nbsp;|&nbsp; March 25, 2026</p>
+<p class="sub">TPU v8 · L11 State · 10 Pods · 1,800 Racks &nbsp;|&nbsp; 6MDC Plans R2 + CB3 Model &nbsp;|&nbsp; March 25, 2026</p>
 
-<div class="banner">
-  <h2>8 DOCK DOORS &mdash; Split 4+4, South Wall</h2>
-  <p>Covers 10 pods (1,800 racks) in 7 days without pre-staging dependency &nbsp;|&nbsp; 2.7× headroom &nbsp;|&nbsp; N+1 redundancy</p>
+<div class="rec">
+  <h2>8 Dock Doors &mdash; Split 4+4, South Wall</h2>
+  <p>250 truckloads in 7 days &nbsp;|&nbsp; 96 TL/day capacity vs 35.7 TL/day need &nbsp;|&nbsp; No pre-staging required</p>
 </div>
 
-<!-- OPTIONS -->
-<h2>Options Comparison</h2>
-<div class="cards">
-  <div class="card">
-    <div class="label">Conservative</div>
-    <div class="count">6</div>
-    <div class="detail">
-      <div><strong>72</strong> TL/day capacity</div>
-      <div><strong>2.0×</strong> headroom (vs 35.7 TL/day need)</div>
-      <div>Requires pre-staging commitment</div>
-      <div>34% margin if pre-staging fails</div>
-      <div>1 door down = tight</div>
-    </div>
-    <span class="tag yellow">Needs pre-staging</span>
-  </div>
-  <div class="card rec">
-    <div class="label">Recommended</div>
-    <div class="count">8</div>
-    <div class="detail">
-      <div><strong>96</strong> TL/day capacity</div>
-      <div><strong>2.7×</strong> headroom</div>
-      <div>No pre-staging required</div>
-      <div>N+1 redundancy on all functions</div>
-      <div>Handles pod refresh + steady-state</div>
-    </div>
-    <span class="tag green">Vendor-schedule independent</span>
-  </div>
-  <div class="card">
-    <div class="label">Overkill</div>
-    <div class="count">10</div>
-    <div class="detail">
-      <div><strong>120</strong> TL/day capacity</div>
-      <div><strong>3.4×</strong> headroom</div>
-      <div>Additional $400–600K construction</div>
-      <div>Doors sit idle in steady-state</div>
-      <div>Diminishing returns</div>
-    </div>
-    <span class="tag gray">Higher cost, low ROI</span>
-  </div>
-</div>
-
-<!-- MATH -->
+<!-- V8 MATH -->
 <div class="section">
-<h2>How We Got Here — The Math</h2>
-<div class="two-col">
+<h2>v8 Throughput Math</h2>
+<div class="two">
 <div>
-  <h3>Demand</h3>
+  <h3 style="font-size:0.95rem; margin:0 0 6px;">Demand</h3>
   <table>
-    <tr><td>Pods</td><td><strong>10</strong> (5 per DH)</td></tr>
-    <tr><td>Racks/pod</td><td><strong>180</strong></td></tr>
+    <tr><td>Pods</td><td><strong>10</strong> (5 per data hall)</td></tr>
+    <tr><td>Racks/pod</td><td><strong>180</strong> (TPU v8 — 28"W × 48"D)</td></tr>
     <tr><td>Total racks</td><td><strong>1,800</strong></td></tr>
-    <tr><td>Rows/pod</td><td><strong>16</strong></td></tr>
-    <tr><td>Total rows</td><td><strong>160</strong></td></tr>
+    <tr><td>Rows</td><td><strong>160</strong> (16/pod)</td></tr>
     <tr><td>Target</td><td><strong>7 days</strong> physical placement</td></tr>
-    <tr><td>Rack spec</td><td>TPU v8 — 28"W × 48"D, L11 state</td></tr>
   </table>
-  <h3>Material (truckloads)</h3>
+
+  <h3 style="font-size:0.95rem; margin:16px 0 6px;">Material</h3>
   <table>
     <tr><th>Category</th><th>TL</th><th>Notes</th></tr>
-    <tr><td>Racks</td><td>90</td><td>9 TL/pod</td></tr>
-    <tr><td>Battery/Rec/Misc</td><td>160</td><td>Cables removed (L11)</td></tr>
-    <tr><td>Cabling</td><td>~0</td><td>Ships with racks (L11)</td></tr>
-    <tr><td>CDU</td><td>—</td><td>Excluded from critical path</td></tr>
-    <tr><td>Machine pop</td><td>—</td><td>Excluded from critical path</td></tr>
-    <tr class="highlight"><td><strong>TOTAL</strong></td><td><strong>250</strong></td><td>35.7 TL/day for 7 days</td></tr>
+    <tr><td>Racks (v8, L11)</td><td>90</td><td>9 TL/pod · ~20 racks/truck</td></tr>
+    <tr><td>Battery/Rec/Misc</td><td>160</td><td>Cables ship with racks (L11)</td></tr>
+    <tr><td>CDU / Machine pop</td><td>—</td><td>Excluded from critical path</td></tr>
+    <tr class="hl"><td><strong>Total</strong></td><td><strong>250</strong></td><td><strong>35.7 TL/day</strong> for 7 days</td></tr>
   </table>
 </div>
 <div>
-  <h3>Dock Throughput</h3>
-  <div class="formula">
-    Truck unload time: 1.5 hrs (per v7 model)<br>
-    Trucks/door/shift: 12hr / 1.5hr = 8.0 theoretical<br>
-    At 75% utilization: 6.0 TL/door/shift<br>
-    × 2 shifts/day = <strong>12.0 TL/door/day</strong><br><br>
-    8 doors × 12 = <strong>96 TL/day capacity</strong><br>
-    96 / 35.7 = <strong>2.7× headroom</strong>
+  <h3 style="font-size:0.95rem; margin:0 0 6px;">Dock Capacity</h3>
+  <div class="math">
+    Truck unload: <strong>1.5 hrs</strong><br>
+    12hr shift / 1.5hr = 8 trucks/door (theoretical)<br>
+    × 75% utilization = <strong>6 TL/door/shift</strong><br>
+    × 2 shifts = <strong>12 TL/door/day</strong><br><br>
+    8 doors × 12 = <strong>96 TL/day</strong><br>
+    Need: <strong>35.7 TL/day</strong>
   </div>
-  <h3>Install Throughput</h3>
-  <div class="formula">
-    Rack placement: 45 labor hrs/row × 160 rows = 7,200 hrs<br>
-    7 days = 7,200 / (HC × 10 useful hrs × 2 shifts)<br>
-    HC = 7,200 / 140 = <strong>52 people/shift</strong><br><br>
-    Cabling (L11): ~5 hrs/row × 160 = 800 hrs<br>
-    6 days = 800 / (HC × 10 × 2)<br>
-    HC = 800 / 120 = <strong>7 people/shift</strong>
-  </div>
-  <div class="note">
-    <strong>V7 baseline:</strong> CB3 used 20 HC/shift → 14.4 days for 8 pods.
-    We need 52 HC/shift (2.6× crew) for 10 pods in 7 days (2.6× faster).
+
+  <h3 style="font-size:0.95rem; margin:16px 0 6px;">Install Rate</h3>
+  <div class="math">
+    Rack placement: 45 hrs/row × 160 rows = 7,200 hrs<br>
+    ÷ (7 days × 10 useful hrs × 2 shifts) = <strong>52 HC/shift</strong><br><br>
+    Cabling (L11 — EOR/TOR only): 5 hrs/row × 160 = 800 hrs<br>
+    ÷ (6 days × 10 hrs × 2 shifts) = <strong>7 HC/shift</strong>
   </div>
 </div>
+</div>
+</div>
+
+<!-- WHY 8 -->
+<div class="section">
+<h2>Why 8 Doors</h2>
+<table>
+  <tr><th>Doors</th><th>TL/day Capacity</th><th>Pre-staging Required?</th><th>Risk</th></tr>
+  <tr><td>6</td><td>72</td><td>Yes — all non-rack material must arrive early</td><td>1 door down = schedule risk</td></tr>
+  <tr class="hl"><td><strong>8</strong></td><td><strong>96</strong></td><td><strong>No</strong></td><td>Absorbs door outage + vendor delays</td></tr>
+  <tr><td>10</td><td>120</td><td>No</td><td>+$400–600K construction, doors idle post-sprint</td></tr>
+</table>
+<div class="note">
+  Pre-staging depends on vendor delivery schedule, which we don't control. 8 doors removes that dependency — all 250 TL can flow in 7 days without advance deliveries.
 </div>
 </div>
 
 <!-- STAFFING -->
 <div class="section">
-<h2>Staffing Plan (Sprint)</h2>
+<h2>Staffing (per shift, 2×12hr)</h2>
 <table>
-  <tr><th>Role</th><th>Per Shift</th><th>Across 2 Shifts</th><th>Notes</th></tr>
-  <tr><td>Rack placement / power infra</td><td>52</td><td>104</td><td>45 labor hrs/row, 17 rows active simultaneously</td></tr>
+  <tr><th>Role</th><th>Per Shift</th><th>×2 Shifts</th><th>Notes</th></tr>
+  <tr><td>Rack placement / power infra</td><td>52</td><td>104</td><td>45 hrs/row, 17 rows active</td></tr>
   <tr><td>Rack cabling (L11 — EOR/TOR only)</td><td>7</td><td>14</td><td>Starts day 2, ~5 hrs/row</td></tr>
   <tr><td>Dock / material handling</td><td>12</td><td>24</td><td>Forklift ops, staging, inventory</td></tr>
   <tr><td>Supervision / safety</td><td>7</td><td>14</td><td>1 per ~12 workers + site safety</td></tr>
-  <tr class="highlight"><td><strong>TOTAL</strong></td><td><strong>78</strong></td><td><strong>156</strong></td><td>Well under 6MDC occupancy limit</td></tr>
+  <tr class="hl"><td><strong>Total</strong></td><td><strong>78</strong></td><td><strong>156</strong></td><td></td></tr>
 </table>
 </div>
 
@@ -164,149 +116,110 @@
 <div class="section">
 <h2>Delivery Plan</h2>
 <table>
-  <tr><th>Period</th><th>Duration</th><th>TL Volume</th><th>TL/Day</th><th>Active Doors</th></tr>
-  <tr><td>Pre-stage (optional)</td><td>14–21 days before sprint</td><td>160 TL (battery/rec/misc)</td><td>7.6–11.4</td><td>2–3 inbound</td></tr>
-  <tr><td>Sprint (no pre-stage)</td><td>7 days</td><td>250 TL total</td><td>35.7</td><td>5 inbound + 3 outbound</td></tr>
-  <tr><td>Sprint (with pre-stage)</td><td>7 days</td><td>90 TL (racks only, L11)</td><td>12.9</td><td>2 inbound + 3 outbound</td></tr>
-  <tr><td>Steady-state</td><td>Ongoing</td><td>1–5 TL/week</td><td>&lt;1</td><td>2–3 active</td></tr>
+  <tr><th>Phase</th><th>Duration</th><th>TL</th><th>TL/Day</th><th>Active Doors</th></tr>
+  <tr><td>Pre-stage (optional)</td><td>14–21 days before sprint</td><td>160 (battery/rec/misc)</td><td>8–11</td><td>2–3 inbound</td></tr>
+  <tr><td>Sprint (no pre-stage)</td><td>7 days</td><td>250 total</td><td>35.7</td><td>5 in + 3 out</td></tr>
+  <tr><td>Sprint (with pre-stage)</td><td>7 days</td><td>90 (racks only)</td><td>12.9</td><td>2 in + 3 out</td></tr>
+  <tr><td>Steady-state</td><td>Ongoing</td><td>1–5 TL/week</td><td>&lt;1</td><td>2–3</td></tr>
 </table>
-<h3>Door Assignments</h3>
+
+<h3 style="font-size:0.95rem; margin:16px 0 6px;">Door Assignments</h3>
 <table>
-  <tr><th>Door</th><th>Pre-stage Role</th><th>Sprint Role</th><th>Steady-State Role</th></tr>
-  <tr><td>1–3</td><td>Battery/misc inbound</td><td>Rack inbound</td><td>General inbound</td></tr>
-  <tr><td>4–5</td><td>Overflow inbound</td><td>Rack inbound overflow</td><td>Inbound flex</td></tr>
-  <tr><td>6–7</td><td>Not active</td><td>Outbound waste/packaging</td><td>Outbound/decom</td></tr>
-  <tr><td>8</td><td>Not active</td><td>Overflow/redundancy</td><td>Refresh/future</td></tr>
+  <tr><th>Door</th><th>Sprint Role</th><th>Steady-State</th></tr>
+  <tr><td>1–3</td><td>Rack inbound</td><td>General inbound</td></tr>
+  <tr><td>4–5</td><td>Inbound overflow</td><td>Flex</td></tr>
+  <tr><td>6–7</td><td>Outbound (waste/packaging)</td><td>Outbound/decom</td></tr>
+  <tr><td>8</td><td>Overflow/redundancy</td><td>Refresh/future</td></tr>
 </table>
 </div>
 
 <!-- FLOOR PLAN -->
 <div class="section">
 <h2>Door Placement — South Wall</h2>
-<div class="floorplan">
-<svg viewBox="0 0 1000 260" xmlns="http://www.w3.org/2000/svg">
-  <!-- Building outline -->
-  <rect x="20" y="20" width="960" height="180" rx="4" fill="none" stroke="#30363d" stroke-width="2"/>
-  <!-- Left DH -->
-  <rect x="30" y="30" width="380" height="160" rx="2" fill="#0d2818" stroke="#1a7f37" stroke-width="1" opacity="0.5"/>
-  <text x="220" y="115" fill="#3fb950" font-size="14" text-anchor="middle" font-weight="600">LEFT DATA HALL</text>
-  <text x="220" y="132" fill="#3fb950" font-size="10" text-anchor="middle">Cols 1–29 (~614')</text>
-  <!-- Admin block -->
-  <rect x="420" y="30" width="160" height="160" rx="2" fill="#1c1e23" stroke="#30363d" stroke-width="1"/>
-  <text x="500" y="108" fill="#8b949e" font-size="12" text-anchor="middle" font-weight="600">ADMIN</text>
-  <text x="500" y="124" fill="#8b949e" font-size="9" text-anchor="middle">Cols 30–41</text>
-  <text x="500" y="138" fill="#8b949e" font-size="8" text-anchor="middle">SOC · DOC · FOC</text>
-  <!-- Right DH -->
-  <rect x="590" y="30" width="380" height="160" rx="2" fill="#0d2818" stroke="#1a7f37" stroke-width="1" opacity="0.5"/>
-  <text x="780" y="115" fill="#3fb950" font-size="14" text-anchor="middle" font-weight="600">RIGHT DATA HALL</text>
-  <text x="780" y="132" fill="#3fb950" font-size="10" text-anchor="middle">Cols 42–70 (~614')</text>
-  <!-- CU bays label (north) -->
-  <text x="500" y="14" fill="#8b949e" font-size="9" text-anchor="middle">▲ NORTH — 74 CU Bays at 21'-2"</text>
-  <!-- South wall label -->
-  <text x="500" y="214" fill="#8b949e" font-size="9" text-anchor="middle">▼ SOUTH WALL (Row A) — Dock Doors</text>
-  <!-- Left dock doors (4) -->
-  <rect x="80" y="194" width="24" height="14" rx="2" fill="#58a6ff"/>
-  <rect x="112" y="194" width="24" height="14" rx="2" fill="#58a6ff"/>
-  <rect x="144" y="194" width="24" height="14" rx="2" fill="#58a6ff"/>
-  <rect x="176" y="194" width="24" height="14" rx="2" fill="#58a6ff"/>
-  <text x="148" y="224" fill="#58a6ff" font-size="9" text-anchor="middle" font-weight="600">← 4 DOORS (Cols 8–14) →</text>
-  <!-- Right dock doors (4) -->
-  <rect x="780" y="194" width="24" height="14" rx="2" fill="#58a6ff"/>
-  <rect x="812" y="194" width="24" height="14" rx="2" fill="#58a6ff"/>
-  <rect x="844" y="194" width="24" height="14" rx="2" fill="#58a6ff"/>
-  <rect x="876" y="194" width="24" height="14" rx="2" fill="#58a6ff"/>
-  <text x="848" y="224" fill="#58a6ff" font-size="9" text-anchor="middle" font-weight="600">← 4 DOORS (Cols 56–62) →</text>
-  <!-- Door spec -->
-  <text x="500" y="242" fill="#6e7681" font-size="8" text-anchor="middle">Each: 10'W × 14'H clear · 14' bay pitch · 30K lb leveler · 70' apron · 50' staging depth</text>
-  <!-- Dimension -->
-  <line x1="20" y1="252" x2="980" y2="252" stroke="#30363d" stroke-width="1"/>
-  <text x="500" y="260" fill="#6e7681" font-size="8" text-anchor="middle">1870'-0"</text>
+<div class="fp">
+<svg viewBox="0 0 1000 250" xmlns="http://www.w3.org/2000/svg">
+  <rect x="20" y="20" width="960" height="170" rx="4" fill="none" stroke="#30363d" stroke-width="2"/>
+  <rect x="30" y="30" width="380" height="150" rx="2" fill="#0d2818" stroke="#1a7f37" stroke-width="1" opacity="0.5"/>
+  <text x="220" y="110" fill="#3fb950" font-size="14" text-anchor="middle" font-weight="600">LEFT DATA HALL</text>
+  <text x="220" y="126" fill="#3fb950" font-size="10" text-anchor="middle">Cols 1–29 · 5 pods</text>
+  <rect x="420" y="30" width="160" height="150" rx="2" fill="#1c1e23" stroke="#30363d" stroke-width="1"/>
+  <text x="500" y="105" fill="#8b949e" font-size="12" text-anchor="middle" font-weight="600">ADMIN</text>
+  <text x="500" y="120" fill="#8b949e" font-size="9" text-anchor="middle">Cols 30–41</text>
+  <rect x="590" y="30" width="380" height="150" rx="2" fill="#0d2818" stroke="#1a7f37" stroke-width="1" opacity="0.5"/>
+  <text x="780" y="110" fill="#3fb950" font-size="14" text-anchor="middle" font-weight="600">RIGHT DATA HALL</text>
+  <text x="780" y="126" fill="#3fb950" font-size="10" text-anchor="middle">Cols 42–70 · 5 pods</text>
+  <text x="500" y="14" fill="#8b949e" font-size="9" text-anchor="middle">▲ NORTH — CU Bays</text>
+  <text x="500" y="204" fill="#8b949e" font-size="9" text-anchor="middle">▼ SOUTH WALL — Dock Doors</text>
+  <rect x="80" y="184" width="24" height="12" rx="2" fill="#58a6ff"/>
+  <rect x="112" y="184" width="24" height="12" rx="2" fill="#58a6ff"/>
+  <rect x="144" y="184" width="24" height="12" rx="2" fill="#58a6ff"/>
+  <rect x="176" y="184" width="24" height="12" rx="2" fill="#58a6ff"/>
+  <text x="148" y="216" fill="#58a6ff" font-size="9" text-anchor="middle" font-weight="600">4 Doors (Cols 8–14)</text>
+  <rect x="780" y="184" width="24" height="12" rx="2" fill="#58a6ff"/>
+  <rect x="812" y="184" width="24" height="12" rx="2" fill="#58a6ff"/>
+  <rect x="844" y="184" width="24" height="12" rx="2" fill="#58a6ff"/>
+  <rect x="876" y="184" width="24" height="12" rx="2" fill="#58a6ff"/>
+  <text x="848" y="216" fill="#58a6ff" font-size="9" text-anchor="middle" font-weight="600">4 Doors (Cols 56–62)</text>
+  <text x="500" y="234" fill="#6e7681" font-size="8" text-anchor="middle">10'W × 14'H clear · 14' pitch · 30K lb leveler · 70' apron · 50' staging depth</text>
+  <line x1="20" y1="244" x2="980" y2="244" stroke="#30363d" stroke-width="1"/>
+  <text x="500" y="252" fill="#6e7681" font-size="8" text-anchor="middle">1870'-0"</text>
 </svg>
 </div>
 </div>
 
 <!-- INTERIOR LOGISTICS -->
 <div class="section">
-<h2>Interior Logistics — Dock to Row</h2>
-<div class="two-col">
+<h2>Interior Logistics</h2>
+<div class="two">
 <div>
-  <h3>Delivery Path</h3>
-  <ol style="font-size:0.85rem; padding-left:20px;">
-    <li>Truck unloads at south wall dock bay (forklift → staging lane)</li>
-    <li>Material handlers stage by row assignment</li>
-    <li>Tugger train (4–6 racks/trip) enters DH via south access corridor</li>
-    <li>Tugger proceeds down center aisle to target row</li>
-    <li>Pallet jack places individual racks at position</li>
-    <li>Empty tugger returns to staging for next load</li>
-  </ol>
-  <h3>Travel Distance</h3>
-  <div class="formula">
-    Max one-way: ~275' (door to far row)<br>
-    Average one-way: ~200'<br>
-    Round trip: ~400'<br>
-    At tugger speed (5 mph): <strong>&lt;1 min travel</strong>
+  <div class="math">
+    <strong>Delivery path:</strong><br>
+    Truck → forklift to staging lane → tugger train (4–6 racks) → center aisle → pallet jack into row<br><br>
+    <strong>Travel:</strong> Avg ~200' one-way, &lt;1 min at tugger speed
   </div>
 </div>
 <div>
-  <h3>Equipment</h3>
   <table>
     <tr><th>Equipment</th><th>Qty</th><th>Use</th></tr>
-    <tr><td>Forklifts (dock)</td><td>4</td><td>Trailer → staging</td></tr>
+    <tr><td>Forklifts</td><td>4</td><td>Trailer → staging</td></tr>
     <tr><td>Tugger trains</td><td>8</td><td>Staging → row (4/DH)</td></tr>
-    <tr><td>Pallet jacks</td><td>~34</td><td>Row placement (2/active row)</td></tr>
-    <tr><td>Flatbed carts</td><td>10</td><td>Cabling/misc material</td></tr>
+    <tr><td>Pallet jacks</td><td>~34</td><td>Row placement</td></tr>
   </table>
-  <h3>Interior Throughput Check</h3>
-  <div class="formula">
-    8 tuggers × 5 racks/trip × 3 trips/hr = <strong>120 racks/hr</strong><br>
-    Need: 257 racks/day ÷ 20 hrs = <strong>12.9 racks/hr</strong><br>
-    Headroom: <strong>9.3×</strong> — interior is not the bottleneck ✓
+  <div class="math" style="margin-top:8px;">
+    8 tuggers × 5 racks × 3 trips/hr = <strong>120 racks/hr</strong><br>
+    Need: 257 racks/day ÷ 20 hrs = <strong>13 racks/hr</strong>
   </div>
 </div>
 </div>
 </div>
 
-<!-- ACCELERATION OPTIONS -->
+<!-- ACCELERATION -->
 <div class="section">
-<h2>Acceleration Options (If Needed)</h2>
-<div class="accel">
-  <strong>Option 1: Delay admin interior build-out</strong><br>
-  Leave admin block (cols 30–41) as open staging during sprint. Gain ~20,000 sq ft. Admin runs from trailers. Saves 1–2 days by eliminating staging bottleneck.
-</div>
-<div class="accel">
-  <strong>Option 2: South wall knock-out panels</strong><br>
-  Design 2–4 removable wall sections → 10–12 total dock positions during sprint. Seal post-sprint. Increases capacity from 96 to 120–144 TL/day.
-</div>
-<div class="accel">
-  <strong>Option 3: Skip pod partition walls initially</strong><br>
-  Wider aisles, more flexible tugger routing. Build walls after rack placement. Saves ~0.5–1 day on install.
-</div>
-<div class="accel">
-  <strong>Option 4: North wall temporary access (CU bay knock-outs)</strong><br>
-  Open 2–4 CU bay positions for direct DH access from north. Doubles interior delivery paths. Most aggressive — saves 1–2 days but adds rework cost.
-</div>
+<h2>Acceleration Options</h2>
+<div class="opts"><strong>Delay admin build-out:</strong> Use admin block (~20K sq ft) as staging during sprint. Saves 1–2 days.</div>
+<div class="opts"><strong>South wall knock-out panels:</strong> 2–4 removable sections → 10–12 dock positions. Seal post-sprint.</div>
+<div class="opts"><strong>Skip pod partition walls:</strong> Wider aisles during install. Build walls after rack placement. Saves ~0.5–1 day.</div>
+<div class="opts"><strong>North wall temp access:</strong> Open 2–4 CU bays for direct DH access. Doubles delivery paths. Most aggressive.</div>
 </div>
 
 <!-- ASSUMPTIONS -->
 <div class="section">
 <h2>Key Assumptions</h2>
 <ul class="assumptions">
-  <li><strong>Dock cycle:</strong> 1.5 hrs/truck unload (per v7 CB3 throughput model)</li>
-  <li><strong>Shift model:</strong> 2×12hr shifts, 24/7 coverage, 75% worker utilization (per v7)</li>
-  <li><strong>Rack placement labor:</strong> 45 hrs/row (per v7 — Bloom GA Deployment Playbook)</li>
-  <li><strong>Rack cabling labor:</strong> ~5 hrs/row (L11 pre-cabled state eliminates v7's 27 hrs/row)</li>
-  <li><strong>Row constraint:</strong> Max 3 workers per row space (per v7 CB3 deployment plan)</li>
-  <li><strong>Rack spec:</strong> TPU v8 — 28" wide × 48" deep, L11 state (pre-cabled from factory)</li>
-  <li><strong>Truck capacity:</strong> ~20 racks/truck (weight-limited at 44,000 lb payload)</li>
-  <li><strong>V7 inbound rate:</strong> 5 TL/shift at CB3 was a supply constraint, not dock capacity</li>
-  <li><strong>Excluded from critical path:</strong> CDU installation, machine population (per user direction)</li>
-  <li><strong>QA/turn-up:</strong> Not included in 7-day target — follows physical placement</li>
-  <li><strong>Pre-staging:</strong> Recommended but not required with 8 doors (vendor schedule dependent)</li>
+  <li><strong>Dock cycle:</strong> 1.5 hrs/truck (per CB3 throughput model)</li>
+  <li><strong>Shifts:</strong> 2×12hr, 75% utilization</li>
+  <li><strong>Rack placement:</strong> 45 labor hrs/row (per CB3 model)</li>
+  <li><strong>Rack cabling:</strong> ~5 hrs/row — L11 eliminates v7's 27 hrs/row</li>
+  <li><strong>Row constraint:</strong> Max 3 workers per row</li>
+  <li><strong>Rack spec:</strong> TPU v8 — 28"W × 48"D, L11 (pre-cabled from factory)</li>
+  <li><strong>Truck capacity:</strong> ~20 racks/truck (44K lb payload limit)</li>
+  <li><strong>Excluded:</strong> CDU installation, machine population, QA/turn-up</li>
+  <li><strong>Pre-staging:</strong> Recommended but not required with 8 doors</li>
 </ul>
 </div>
 
-<p style="text-align:center; color:#6e7681; font-size:0.75rem; margin-top:40px;">
-  Analysis based on 6MDC Plans R2 (2026-03-24) and CB3 TPU Deployment Model. For internal planning use.
+<p style="text-align:center; color:#6e7681; font-size:0.72rem; margin-top:32px;">
+  6MDC Plans R2 (2026-03-24) · CB3 TPU Deployment Model · For internal planning use
 </p>
 
 </body>
