@@ -23,8 +23,6 @@
   .section { margin-bottom:28px; }
   .fp { background:#161b22; border-radius:8px; padding:16px; margin:12px 0; }
   .fp svg { width:100%; height:auto; }
-  .opts { background:#161b22; border-radius:6px; padding:10px 14px; margin:6px 0; font-size:0.84rem; }
-  .opts strong { color:#d2a8ff; }
   .assumptions li { margin:3px 0; font-size:0.82rem; color:#8b949e; }
   .assumptions li strong { color:#c9d1d9; }
   @media(max-width:700px){ .two { grid-template-columns:1fr; } }
@@ -33,11 +31,11 @@
 <body>
 
 <h1>6MDC Dock Door Recommendation</h1>
-<p class="sub">TPU v8 · L11 State · 10 Pods · 1,800 Racks &nbsp;|&nbsp; 6MDC Plans R2 + CB3 Model &nbsp;|&nbsp; March 25, 2026</p>
+<p class="sub">TPU v8 · L11 State · 10 Pods · 1,800 Racks · 19,400 sq ft Loading Dock &nbsp;|&nbsp; 6MDC Plans R2 + CB3 Model &nbsp;|&nbsp; March 25, 2026</p>
 
 <div class="rec">
   <h2>8 Dock Doors &mdash; Split 4+4, South Wall</h2>
-  <p>250 truckloads in 7 days &nbsp;|&nbsp; 96 TL/day capacity vs 35.7 TL/day need &nbsp;|&nbsp; No pre-staging required</p>
+  <p>250 truckloads delivered in ~3 days &nbsp;|&nbsp; Install completes in 7 days (labor-gated) &nbsp;|&nbsp; No pre-staging required</p>
 </div>
 
 <!-- V8 MATH -->
@@ -64,14 +62,14 @@
   </table>
 </div>
 <div>
-  <h3 style="font-size:0.95rem; margin:0 0 6px;">Dock Capacity</h3>
+  <h3 style="font-size:0.95rem; margin:0 0 6px;">Dock Capacity (8 Doors)</h3>
   <div class="math">
     Truck unload: <strong>1.5 hrs</strong><br>
     12hr shift / 1.5hr = 8 trucks/door (theoretical)<br>
     × 75% utilization = <strong>6 TL/door/shift</strong><br>
     × 2 shifts = <strong>12 TL/door/day</strong><br><br>
     8 doors × 12 = <strong>96 TL/day</strong><br>
-    Need: <strong>35.7 TL/day</strong>
+    250 TL ÷ 96 TL/day = <strong>~3 days to receive all material</strong>
   </div>
 
   <h3 style="font-size:0.95rem; margin:16px 0 6px;">Install Rate</h3>
@@ -85,17 +83,45 @@
 </div>
 </div>
 
-<!-- WHY 8 -->
+<!-- BOTTLENECK -->
 <div class="section">
-<h2>Why 8 Doors</h2>
+<h2>What Gates the Timeline</h2>
 <table>
-  <tr><th>Doors</th><th>TL/day Capacity</th><th>Pre-staging Required?</th><th>Risk</th></tr>
-  <tr><td>6</td><td>72</td><td>Yes — all non-rack material must arrive early</td><td>1 door down = schedule risk</td></tr>
-  <tr class="hl"><td><strong>8</strong></td><td><strong>96</strong></td><td><strong>No</strong></td><td>Absorbs door outage + vendor delays</td></tr>
-  <tr><td>10</td><td>120</td><td>No</td><td>+$400–600K construction, doors idle post-sprint</td></tr>
+  <tr><th>Constraint</th><th>Duration</th><th>Bottleneck?</th></tr>
+  <tr><td>Delivery (8 doors, 96 TL/day)</td><td>~3 days</td><td>No — finishes by day 3</td></tr>
+  <tr class="hl"><td><strong>Install (52 HC/shift, 7,200 labor hrs)</strong></td><td><strong>7 days</strong></td><td><strong>Yes — labor is the gating constraint</strong></td></tr>
+  <tr><td>Cabling (7 HC/shift, L11)</td><td>6 days</td><td>No — runs in parallel starting day 2</td></tr>
 </table>
 <div class="note">
-  Pre-staging depends on vendor delivery schedule, which we don't control. 8 doors removes that dependency — all 250 TL can flow in 7 days without advance deliveries.
+  Delivery finishes by day 3. The crew spends the remaining 4 days installing with all material on site. The dock shifts to outbound-only (waste/packaging) for days 4–7.
+</div>
+</div>
+
+<!-- STAGING -->
+<div class="section">
+<h2>19,400 sq ft Loading Dock</h2>
+<div class="two">
+<div>
+  <table>
+    <tr><td>Dock area</td><td><strong>19,400 sq ft</strong></td></tr>
+    <tr><td>Staging capacity</td><td><strong>~48 TL</strong> at ~400 sq ft/TL</td></tr>
+    <tr><td>Peak inbound rate</td><td><strong>96 TL/day</strong> (days 1–3)</td></tr>
+    <tr><td>Staging dwell time</td><td><strong>&lt;4 hrs</strong> avg before install consumes</td></tr>
+  </table>
+</div>
+<div>
+  <div class="math">
+    <strong>Staging flow check:</strong><br>
+    Inbound: 96 TL/day = 4 TL/hr<br>
+    Install consumption: ~23 rows/day = ~2.4 TL/hr equivalent<br>
+    Net accumulation: ~1.6 TL/hr<br>
+    Peak buffer (end day 3): ~48 TL staged<br>
+    19,400 sq ft handles <strong>48 TL</strong> — staging never overflows
+  </div>
+</div>
+</div>
+<div class="note">
+  Material flows through the dock as a buffer, not long-term storage. Install crews consume staged material continuously. Peak buffer at end of day 3 (~48 TL) fits within the 19,400 sq ft dock. No pre-staging needed — the dock absorbs the full sprint delivery.
 </div>
 </div>
 
@@ -104,7 +130,7 @@
 <h2>Staffing (per shift, 2×12hr)</h2>
 <table>
   <tr><th>Role</th><th>Per Shift</th><th>×2 Shifts</th><th>Notes</th></tr>
-  <tr><td>Rack placement / power infra</td><td>52</td><td>104</td><td>45 hrs/row, 17 rows active</td></tr>
+  <tr><td>Rack placement / power infra</td><td>52</td><td>104</td><td>45 hrs/row, 17 rows active simultaneously</td></tr>
   <tr><td>Rack cabling (L11 — EOR/TOR only)</td><td>7</td><td>14</td><td>Starts day 2, ~5 hrs/row</td></tr>
   <tr><td>Dock / material handling</td><td>12</td><td>24</td><td>Forklift ops, staging, inventory</td></tr>
   <tr><td>Supervision / safety</td><td>7</td><td>14</td><td>1 per ~12 workers + site safety</td></tr>
@@ -117,19 +143,18 @@
 <h2>Delivery Plan</h2>
 <table>
   <tr><th>Phase</th><th>Duration</th><th>TL</th><th>TL/Day</th><th>Active Doors</th></tr>
-  <tr><td>Pre-stage (optional)</td><td>14–21 days before sprint</td><td>160 (battery/rec/misc)</td><td>8–11</td><td>2–3 inbound</td></tr>
-  <tr><td>Sprint (no pre-stage)</td><td>7 days</td><td>250 total</td><td>35.7</td><td>5 in + 3 out</td></tr>
-  <tr><td>Sprint (with pre-stage)</td><td>7 days</td><td>90 (racks only)</td><td>12.9</td><td>2 in + 3 out</td></tr>
-  <tr><td>Steady-state</td><td>Ongoing</td><td>1–5 TL/week</td><td>&lt;1</td><td>2–3</td></tr>
+  <tr><td>Sprint delivery</td><td>Days 1–3</td><td>250 total</td><td>~84</td><td>5 inbound + 3 outbound</td></tr>
+  <tr><td>Sprint install-only</td><td>Days 4–7</td><td>0 inbound</td><td>0</td><td>3 outbound (waste/packaging)</td></tr>
+  <tr><td>Steady-state</td><td>Ongoing</td><td>1–5 TL/week</td><td>&lt;1</td><td>2–3 active</td></tr>
 </table>
 
 <h3 style="font-size:0.95rem; margin:16px 0 6px;">Door Assignments</h3>
 <table>
-  <tr><th>Door</th><th>Sprint Role</th><th>Steady-State</th></tr>
-  <tr><td>1–3</td><td>Rack inbound</td><td>General inbound</td></tr>
-  <tr><td>4–5</td><td>Inbound overflow</td><td>Flex</td></tr>
-  <tr><td>6–7</td><td>Outbound (waste/packaging)</td><td>Outbound/decom</td></tr>
-  <tr><td>8</td><td>Overflow/redundancy</td><td>Refresh/future</td></tr>
+  <tr><th>Door</th><th>Days 1–3 (Delivery)</th><th>Days 4–7 (Install-only)</th><th>Steady-State</th></tr>
+  <tr><td>1–3</td><td>Rack inbound</td><td>Outbound waste/packaging</td><td>General inbound</td></tr>
+  <tr><td>4–5</td><td>Inbound overflow</td><td>Idle</td><td>Flex</td></tr>
+  <tr><td>6–7</td><td>Outbound (waste/packaging)</td><td>Idle</td><td>Outbound/decom</td></tr>
+  <tr><td>8</td><td>Overflow</td><td>Idle</td><td>Refresh/future</td></tr>
 </table>
 </div>
 
@@ -137,7 +162,7 @@
 <div class="section">
 <h2>Door Placement — South Wall</h2>
 <div class="fp">
-<svg viewBox="0 0 1000 250" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 1000 280" xmlns="http://www.w3.org/2000/svg">
   <rect x="20" y="20" width="960" height="170" rx="4" fill="none" stroke="#30363d" stroke-width="2"/>
   <rect x="30" y="30" width="380" height="150" rx="2" fill="#0d2818" stroke="#1a7f37" stroke-width="1" opacity="0.5"/>
   <text x="220" y="110" fill="#3fb950" font-size="14" text-anchor="middle" font-weight="600">LEFT DATA HALL</text>
@@ -149,20 +174,27 @@
   <text x="780" y="110" fill="#3fb950" font-size="14" text-anchor="middle" font-weight="600">RIGHT DATA HALL</text>
   <text x="780" y="126" fill="#3fb950" font-size="10" text-anchor="middle">Cols 42–70 · 5 pods</text>
   <text x="500" y="14" fill="#8b949e" font-size="9" text-anchor="middle">▲ NORTH — CU Bays</text>
-  <text x="500" y="204" fill="#8b949e" font-size="9" text-anchor="middle">▼ SOUTH WALL — Dock Doors</text>
+  <text x="500" y="204" fill="#8b949e" font-size="9" text-anchor="middle">▼ SOUTH WALL — Dock Doors · 19,400 sq ft Loading Dock</text>
+  <!-- Left dock doors (4) -->
   <rect x="80" y="184" width="24" height="12" rx="2" fill="#58a6ff"/>
   <rect x="112" y="184" width="24" height="12" rx="2" fill="#58a6ff"/>
   <rect x="144" y="184" width="24" height="12" rx="2" fill="#58a6ff"/>
   <rect x="176" y="184" width="24" height="12" rx="2" fill="#58a6ff"/>
   <text x="148" y="216" fill="#58a6ff" font-size="9" text-anchor="middle" font-weight="600">4 Doors (Cols 8–14)</text>
+  <!-- Right dock doors (4) -->
   <rect x="780" y="184" width="24" height="12" rx="2" fill="#58a6ff"/>
   <rect x="812" y="184" width="24" height="12" rx="2" fill="#58a6ff"/>
   <rect x="844" y="184" width="24" height="12" rx="2" fill="#58a6ff"/>
   <rect x="876" y="184" width="24" height="12" rx="2" fill="#58a6ff"/>
   <text x="848" y="216" fill="#58a6ff" font-size="9" text-anchor="middle" font-weight="600">4 Doors (Cols 56–62)</text>
-  <text x="500" y="234" fill="#6e7681" font-size="8" text-anchor="middle">10'W × 14'H clear · 14' pitch · 30K lb leveler · 70' apron · 50' staging depth</text>
-  <line x1="20" y1="244" x2="980" y2="244" stroke="#30363d" stroke-width="1"/>
-  <text x="500" y="252" fill="#6e7681" font-size="8" text-anchor="middle">1870'-0"</text>
+  <!-- Loading dock area -->
+  <rect x="60" y="196" width="160" height="30" rx="2" fill="none" stroke="#58a6ff" stroke-width="1" stroke-dasharray="4" opacity="0.4"/>
+  <text x="140" y="234" fill="#6e7681" font-size="7" text-anchor="middle">~9,700 sq ft staging</text>
+  <rect x="760" y="196" width="160" height="30" rx="2" fill="none" stroke="#58a6ff" stroke-width="1" stroke-dasharray="4" opacity="0.4"/>
+  <text x="840" y="234" fill="#6e7681" font-size="7" text-anchor="middle">~9,700 sq ft staging</text>
+  <text x="500" y="254" fill="#6e7681" font-size="8" text-anchor="middle">10'W × 14'H clear · 14' pitch · 30K lb leveler · 70' apron</text>
+  <line x1="20" y1="266" x2="980" y2="266" stroke="#30363d" stroke-width="1"/>
+  <text x="500" y="276" fill="#6e7681" font-size="8" text-anchor="middle">1870'-0"</text>
 </svg>
 </div>
 </div>
@@ -193,15 +225,6 @@
 </div>
 </div>
 
-<!-- ACCELERATION -->
-<div class="section">
-<h2>Acceleration Options</h2>
-<div class="opts"><strong>Delay admin build-out:</strong> Use admin block (~20K sq ft) as staging during sprint. Saves 1–2 days.</div>
-<div class="opts"><strong>South wall knock-out panels:</strong> 2–4 removable sections → 10–12 dock positions. Seal post-sprint.</div>
-<div class="opts"><strong>Skip pod partition walls:</strong> Wider aisles during install. Build walls after rack placement. Saves ~0.5–1 day.</div>
-<div class="opts"><strong>North wall temp access:</strong> Open 2–4 CU bays for direct DH access. Doubles delivery paths. Most aggressive.</div>
-</div>
-
 <!-- ASSUMPTIONS -->
 <div class="section">
 <h2>Key Assumptions</h2>
@@ -213,8 +236,9 @@
   <li><strong>Row constraint:</strong> Max 3 workers per row</li>
   <li><strong>Rack spec:</strong> TPU v8 — 28"W × 48"D, L11 (pre-cabled from factory)</li>
   <li><strong>Truck capacity:</strong> ~20 racks/truck (44K lb payload limit)</li>
+  <li><strong>Loading dock:</strong> 19,400 sq ft total (~9,700 per door cluster)</li>
+  <li><strong>Staging density:</strong> ~400 sq ft per TL staged</li>
   <li><strong>Excluded:</strong> CDU installation, machine population, QA/turn-up</li>
-  <li><strong>Pre-staging:</strong> Recommended but not required with 8 doors</li>
 </ul>
 </div>
 
